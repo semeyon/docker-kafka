@@ -22,6 +22,9 @@ cat /kafka/config/server.properties.template | sed \
   -e "s|{{ZOOKEEPER_CONNECTION_TIMEOUT_MS}}|${ZOOKEEPER_CONNECTION_TIMEOUT_MS:-10000}|g" \
   -e "s|{{ZOOKEEPER_SESSION_TIMEOUT_MS}}|${ZOOKEEPER_SESSION_TIMEOUT_MS:-10000}|g" \
   -e "s|{{GROUP_MAX_SESSION_TIMEOUT_MS}}|${GROUP_MAX_SESSION_TIMEOUT_MS:-300000}|g" \
+  -e "s|{{LOG_RETENTION_MINS}}|${LOG_RETENTION_MINS:-30}|g" \
+  -e "s|{{LOG_RETENTION_CHECK_INTERVAL_MS}}|${LOG_RETENTION_CHECK_INTERVAL_MS:-300000}|g" \
+  -e "s|{{LOG_SEGMENT_BYTES}}|${LOG_SEGMENT_BYTES:-10737418}|g" \
    > /kafka/config/server.properties
 
 # Kafka's built-in start scripts set the first three system properties here, but
