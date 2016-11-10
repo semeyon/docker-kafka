@@ -10,7 +10,7 @@ FROM netflixoss/java:8
 MAINTAINER Ches Martin <ches@whiskeyandgrits.net>
 
 # The Scala 2.11 build is currently recommended by the project.
-ENV KAFKA_VERSION=0.10.0.0 KAFKA_SCALA_VERSION=2.11 JMX_PORT=7203
+ENV KAFKA_VERSION=0.10.0.1 KAFKA_SCALA_VERSION=2.11 JMX_PORT=7203
 ENV KAFKA_RELEASE_ARCHIVE kafka_${KAFKA_SCALA_VERSION}-${KAFKA_VERSION}.tgz
 
 RUN mkdir /kafka /data /logs
@@ -37,10 +37,13 @@ RUN tar -zx -C /kafka --strip-components=1 -f ${KAFKA_RELEASE_ARCHIVE} && \
 ADD config /kafka/config
 ADD start.sh /start.sh
 
+RUN chmod 0777 /var/log
+
 # Set up a user to run Kafka
 RUN groupadd kafka && \
   useradd -d /kafka -g kafka -s /bin/false kafka && \
   chown -R kafka:kafka /kafka /data /logs
+
 USER kafka
 ENV PATH /kafka/bin:$PATH
 WORKDIR /kafka
@@ -50,4 +53,3 @@ EXPOSE 9092 ${JMX_PORT}
 VOLUME [ "/data", "/logs" ]
 
 CMD ["/start.sh"]
-
