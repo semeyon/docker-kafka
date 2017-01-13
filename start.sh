@@ -49,7 +49,7 @@ if [ -z $KAFKA_JMX_OPTS ]; then
     export KAFKA_JMX_OPTS
 fi
 
-# ln -s /kafka/logs /var/log/kafka
+ln -s /kafka/logs /var/log/kafka
 
 echo "Starting kafka"
 exec /kafka/bin/kafka-server-start.sh /kafka/config/server.properties
